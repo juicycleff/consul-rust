@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::errors::Error;
 use crate::errors::Result;
-use crate::request::{delete, get, get_vec, put};
+use crate::request::{delete, get, get_vec, put, put_body};
 use crate::{Client, QueryMeta, QueryOptions, WriteMeta, WriteOptions};
 
 #[derive(Clone, Default, Eq, PartialEq, Serialize, Deserialize, Debug)]
@@ -44,7 +44,7 @@ impl KV for Client {
             Err(Error::from("Session flag is required to acquire lock"))
         }
     }
-
+    
     fn delete(&self, key: &str, options: Option<&WriteOptions>) -> Result<(bool, WriteMeta)> {
         let path = format!("/v1/kv/{}", key);
         delete(&path, &self.config, HashMap::new(), options)
@@ -58,14 +58,14 @@ impl KV for Client {
         let x: Result<(Vec<KVPair>, QueryMeta)> = get(&path, &self.config, HashMap::new(), options);
         x.map(|r| (r.0.first().cloned(), r.1))
     }
-
+    
     fn list(&self, prefix: &str, o: Option<&QueryOptions>) -> Result<(Vec<KVPair>, QueryMeta)> {
         let mut params = HashMap::new();
         params.insert(String::from("recurse"), String::from(""));
         let path = format!("/v1/kv/{}", prefix);
         get_vec(&path, &self.config, params, o)
     }
-
+    
     fn put(&self, pair: &KVPair, o: Option<&WriteOptions>) -> Result<(bool, WriteMeta)> {
         let mut params = HashMap::new();
         if let Some(i) = pair.Flags {
@@ -74,9 +74,9 @@ impl KV for Client {
             }
         }
         let path = format!("/v1/kv/{}", pair.Key);
-        put(&path, Some(&pair.Value), &self.config, params, o)
+        put_body(&path, Some(pair.Value.clone()), &self.config, params, o)
     }
-
+    
     fn release(&self, pair: &KVPair, o: Option<&WriteOptions>) -> Result<(bool, WriteMeta)> {
         let mut params = HashMap::new();
         if let Some(i) = pair.Flags {

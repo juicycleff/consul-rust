@@ -15,66 +15,66 @@ pub struct Weights {
 #[derive(Eq, Default, PartialEq, Serialize, Deserialize, Debug)]
 #[serde(default)]
 pub struct Node {
-    ID: String,
-    Node: String,
-    Address: String,
-    Datacenter: String,
-    TaggedAddresses: HashMap<String, String>,
-    Meta: HashMap<String, String>,
-    CreateIndex: u64,
-    ModifyIndex: u64,
+    pub ID: String,
+    pub Node: String,
+    pub Address: String,
+    pub Datacenter: String,
+    pub TaggedAddresses: HashMap<String, String>,
+    pub Meta: HashMap<String, String>,
+    pub CreateIndex: u64,
+    pub ModifyIndex: u64,
 }
 
 #[derive(Eq, Default, PartialEq, Serialize, Deserialize, Debug)]
 #[serde(default)]
 pub struct CatalogService {
-    ID: String,
-    Node: String,
-    Address: String,
-    Datacenter: String,
-    TaggedAddresses: HashMap<String, String>,
-    NodeMeta: HashMap<String, String>,
-    ServiceID: String,
-    ServiceName: String,
-    ServiceAddress: String,
-    ServiceTags: Vec<String>,
-    ServiceMeta: HashMap<String, String>,
-    ServicePort: u32,
-    ServiceWeights: Weights,
-    ServiceEnableTagOverride: bool,
-    CreateIndex: u64,
-    ModifyIndex: u64,
+    pub ID: String,
+    pub Node: String,
+    pub Address: String,
+    pub Datacenter: String,
+    pub TaggedAddresses: HashMap<String, String>,
+    pub NodeMeta: HashMap<String, String>,
+    pub ServiceID: String,
+    pub ServiceName: String,
+    pub ServiceAddress: String,
+    pub ServiceTags: Vec<String>,
+    pub ServiceMeta: HashMap<String, String>,
+    pub ServicePort: u32,
+    pub ServiceWeights: Weights,
+    pub ServiceEnableTagOverride: bool,
+    pub CreateIndex: u64,
+    pub ModifyIndex: u64,
 }
 
 #[derive(Eq, Default, PartialEq, Serialize, Deserialize, Debug)]
 #[serde(default)]
 pub struct CatalogNode {
-    Node: Option<Node>,
-    Services: HashMap<String, AgentService>,
+    pub Node: Option<Node>,
+    pub Services: HashMap<String, AgentService>,
 }
 
 #[derive(Eq, Default, PartialEq, Serialize, Deserialize, Debug)]
 #[serde(default)]
 pub struct CatalogRegistration {
-    ID: String,
-    Node: String,
-    Address: String,
-    TaggedAddresses: HashMap<String, String>,
-    NodeMeta: HashMap<String, String>,
-    Datacenter: String,
-    Service: Option<AgentService>,
-    Check: Option<AgentCheck>,
-    SkipNodeUpdate: bool,
+    pub ID: String,
+    pub Node: String,
+    pub Address: String,
+    pub TaggedAddresses: HashMap<String, String>,
+    pub NodeMeta: HashMap<String, String>,
+    pub Datacenter: String,
+    pub Service: Option<AgentService>,
+    pub Check: Option<AgentCheck>,
+    pub SkipNodeUpdate: bool,
 }
 
 #[derive(Eq, Default, PartialEq, Serialize, Deserialize, Debug)]
 #[serde(default)]
 pub struct CatalogDeregistration {
-    Node: String,
-    Address: String,
-    Datacenter: String,
-    ServiceID: String,
-    CheckID: String,
+    pub Node: String,
+    pub Address: String,
+    pub Datacenter: String,
+    pub ServiceID: String,
+    pub CheckID: String,
 }
 
 pub trait Catalog {
