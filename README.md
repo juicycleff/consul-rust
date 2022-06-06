@@ -1,4 +1,4 @@
-## consul-rust
+## async-consul-rust
 
 [![Build Status](https://github.com/pierresouchay/consul-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/pierresouchay/consul-rust/actions?query=branch%3Amaster)
 [![](https://img.shields.io/crates/v/consul.svg)](https://crates.io/crates/consul)
@@ -16,10 +16,10 @@ Rust client libray for [Consul](http://consul.io/) HTTP API
     use consul::{Client, Config, QueryMeta};
     use consul::catalog::Catalog;
 
-    fn main(){
+    async fn main(){
         let config = Config::new().unwrap();
         let client = Client::new(config);
-		let services: (HashMap<String, String>, QueryMeta) = client.services(None).unwrap();
+		let services: (HashMap<String, String>, QueryMeta) = client.services(None).await.unwrap();
 		println!("{:?}", services);
     }
 ```
