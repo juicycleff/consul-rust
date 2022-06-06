@@ -6,6 +6,12 @@ error_chain! {
         ConsulError{
             description("")
         }
+         ParseIntError{
+            description("")
+        }
+        ToStrError{
+            description("")
+        }
     }
 
 }

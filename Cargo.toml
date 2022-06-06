@@ -2,7 +2,7 @@
 
 name = "consul"
 version = "0.4.2"
-edition = "2018"
+edition = "2021"
 authors = ["Andrew Useckas <andrew.useckas@threat-x.com>", "Stu Small <stuart.small@threat-x.com>", "YoungKing <yanckin@gmail.com>", "Pierre Souchay <https://github.com/pierresouchay>", "Tomer Shalev <https://github.com/tomers>"]
 description = "Rust client libray for Consul HTTP API"
 documentation = "https://docs.rs/consul/"
@@ -17,11 +17,16 @@ error-chain = "0.12"
 serde = "1"
 serde_derive = "1"
 serde_json = "1.0"
-reqwest = { version = "0.11", features = ["blocking", "json"] }
+reqwest = { version = "0.11", features = ["json"] }
 url = "2.1"
+async-trait = "0.1"
 
 [dev-dependencies]
 base64 = "0.13"
 hostname = "0.3"
 rand = "0.8.3"
 rstest = "0.8.0"
+
+# Used to test async functions that return futures
+tokio = { version = "1.19", features = ["full"] }
+tokio-test = "*"
