@@ -4,6 +4,7 @@ use url::Url;
 use std::str;
 use std::str::FromStr;
 use std::time::Instant;
+use log::debug;
 
 use reqwest::{Client as HttpClient, Body};
 use reqwest::RequestBuilder;
@@ -217,19 +218,20 @@ async fn write_with_json_body<T: Serialize, R: DeserializeOwned, F>(
     let url_str = format!("{}{}", config.address, path);
     let url =
         Url::parse_with_params(&url_str, params.iter()).chain_err(|| "Failed to parse URL")?;
-    let builder = req(&config.http_client, url);
+    let builder = req(&config.http_client, url.clone());
     let builder = if let Some(b) = body {
         builder.json(b)
     } else {
         builder
     };
+    
     let builder = add_config_options(builder, &config);
     let result = builder
         .send()
         .await;
     
     let rsp = result.chain_err(|| "HTTP request to consul failed").unwrap();
-    let j = rsp.json().await.chain_err(|| "Failed to parse JSON").unwrap();
+    let j = rsp.json().await.chain_err(|| "Failed to parse JSON")?;
     Ok((
         j,
         WriteMeta {
